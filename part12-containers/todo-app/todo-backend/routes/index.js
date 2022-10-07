@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const redis = require('../redis');
 const todosRouter = require('./todos.js');
 
 const configs = require('../util/config');
@@ -14,6 +15,11 @@ router.get('/', async (req, res) => {
     ...configs,
     visits,
   });
+});
+
+router.get('/statistics', async (req, res) => {
+  const addedTodosCount = await redis.getAsync('added_todos');
+  res.send({ added_todos: addedTodosCount === null ? 0 : addedTodosCount });
 });
 
 router.use('todos', todosRouter);
