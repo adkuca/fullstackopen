@@ -60,4 +60,6 @@ typings/
 # next.js build output
 .next
 
-data/db
+/node_modules
+
+/mongo_data
