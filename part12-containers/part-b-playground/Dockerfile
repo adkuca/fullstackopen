@@ -10,4 +10,4 @@ ENV DEBUG=part-b-playground:*
 
 USER node
 
-CMD npm start
+CMD ["node", "./bin/www"]
