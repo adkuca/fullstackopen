@@ -3,13 +3,14 @@ FROM node:16 AS build-stage
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY --chown=node:node . .
 
-RUN npm ci
+RUN npm ci --only=production
 
-RUN npm run build
+USER node
 
-RUN npm install -g serve
+RUN ["node_modules/react-scripts/bin/react-scripts.js", "build"]
+
 
 # This is a new stage, everything before this is gone, except the files we want to COPY
 FROM nginx:1.20-alpine
