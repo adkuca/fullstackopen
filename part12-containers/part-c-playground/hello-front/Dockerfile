@@ -1,15 +1,19 @@
 # The first FROM is now a stage called build-stage
 FROM node:16 AS build-stage
 
+ENV NODE_ENV=production
+
 WORKDIR /usr/src/app
 
-COPY --chown=node:node . .
+COPY --chown=node:node package*.json .
 
 RUN npm ci --only=production
 
+COPY --chown=node:node . .
+
 USER node
 
-RUN ["node_modules/react-scripts/bin/react-scripts.js", "build"]
+RUN npm run build
 
 
 # This is a new stage, everything before this is gone, except the files we want to COPY
