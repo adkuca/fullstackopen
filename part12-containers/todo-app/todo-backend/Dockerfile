@@ -1,13 +1,19 @@
 FROM node:16
 
+RUN apt-get update && apt-get install -y --no-install-recommends dumb-init
+
+ENV NODE_ENV=production
+
 WORKDIR /usr/src/app
 
-COPY --chown=node:node . .
+COPY --chown=node:node package*.json .
 
 RUN npm ci --only=production
 
-ENV DEBUG=todo-backend:* PORT=3000
+COPY --chown=node:node . .
+
+ENV DEBUG=todo-backend:*
 
 USER node
 
-CMD npm start
+CMD ["dumb-init", "node", "./bin/www"]
