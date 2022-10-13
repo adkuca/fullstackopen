@@ -1,7 +1,7 @@
 FROM node:16 AS base
 RUN apt-get update && apt-get install -y --no-install-recommends dumb-init
 ENV NODE_ENV=production
-ENV REACT_APP_BACKEND_URL="//localhost:3000"
+# ENV  REACT_APP_BACKEND_URL="http://localhost:8080/api/"
 WORKDIR /usr/src/app
 COPY --chown=node:node package*.json .
 RUN chown node:node /usr/src/app
