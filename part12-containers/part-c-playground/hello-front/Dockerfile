@@ -15,7 +15,6 @@ USER node
 
 RUN npm run build
 
-
 # This is a new stage, everything before this is gone, except the files we want to COPY
 FROM nginx:1.20-alpine
 
