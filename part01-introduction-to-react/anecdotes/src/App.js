@@ -28,12 +28,27 @@ const App = () => {
 
   const randomizeAnecdote = () => setSelected(getRandomIntInclusive(0, anecdotes.length - 1));
 
+  const mostVotes =
+    votes.size === 0
+      ? -1
+      : [...votes.entries()].reduce((acc, curr) => (curr[1] > acc[1] ? curr : acc))[0];
+
   return (
     <div>
+      <h2>Anecdote of the day</h2>
       <p>{anecdotes[selected]}</p>
       <p>has {votes.get(selected) ?? 0} votes</p>
       <button onClick={() => voteAnecdote(selected)}>vote</button>
       <button onClick={randomizeAnecdote}>next anecdote</button>
+      <h2>Anecdote with most votes</h2>
+      {mostVotes !== -1 ? (
+        <>
+          <p>{anecdotes[mostVotes]}</p>
+          <p>has {votes.get(mostVotes)} votes</p>
+        </>
+      ) : (
+        <p>No anecdote with votes</p>
+      )}
     </div>
   );
 };
