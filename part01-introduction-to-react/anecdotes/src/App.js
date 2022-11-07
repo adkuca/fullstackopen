@@ -15,12 +15,24 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(new Map());
+
+  const voteAnecdote = (anecdoteIndex) =>
+    setVotes((prev) => {
+      const prevTemp = new Map(prev);
+      if (prevTemp.has(anecdoteIndex)) prevTemp.set(anecdoteIndex, prevTemp.get(anecdoteIndex) + 1);
+      else prevTemp.set(anecdoteIndex, 1);
+
+      return prevTemp;
+    });
 
   const randomizeAnecdote = () => setSelected(getRandomIntInclusive(0, anecdotes.length - 1));
 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <p>has {votes.get(selected) ?? 0} votes</p>
+      <button onClick={() => voteAnecdote(selected)}>vote</button>
       <button onClick={randomizeAnecdote}>next anecdote</button>
     </div>
   );
